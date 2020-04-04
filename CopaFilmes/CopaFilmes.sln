@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopaFilmes.Dominio", "CopaF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioAPI", "RepositorioAPI\RepositorioAPI.csproj", "{526D3DCB-D92C-4AA8-9AF4-C640222E6D74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopaFilmes.Tests", "CopaFilmes.Tests\CopaFilmes.Tests.csproj", "{078DC651-C638-4782-A7B3-A71884231ADF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{526D3DCB-D92C-4AA8-9AF4-C640222E6D74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{526D3DCB-D92C-4AA8-9AF4-C640222E6D74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{526D3DCB-D92C-4AA8-9AF4-C640222E6D74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{078DC651-C638-4782-A7B3-A71884231ADF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{078DC651-C638-4782-A7B3-A71884231ADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{078DC651-C638-4782-A7B3-A71884231ADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{078DC651-C638-4782-A7B3-A71884231ADF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
