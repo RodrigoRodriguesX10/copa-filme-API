@@ -5,3 +5,5 @@
 /CopaFilmes/.vs/
 /CopaFilmes/CopaFilmes.Dominio/bin/
 /CopaFilmes/CopaFilmes.Dominio/obj/
+/CopaFilmes/RepositorioAPI/obj
+/CopaFilmes/RepositorioAPI/bin

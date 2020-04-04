@@ -13,6 +13,7 @@ namespace CopaFilmes.Dominio.Repositorio
     /// <typeparam name="T">Tipo da entidade em que a consulta irá se aplicar</typeparam>
     public interface IRepository<T> where T: Entidade
     {
+        List<Mensagem> Mensagens { get; }
         /// <summary>
         /// Consulta todos os itens do tipo T no repositório especificado
         /// </summary>
