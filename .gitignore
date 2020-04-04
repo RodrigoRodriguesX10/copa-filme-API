@@ -2,4 +2,6 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/CopaFilmes.Dominio/.vs/CopaFilmes.Dominio/v16
+/CopaFilmes/.vs/
+/CopaFilmes/CopaFilmes.Dominio/bin/
+/CopaFilmes/CopaFilmes.Dominio/obj/
