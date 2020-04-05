@@ -2,8 +2,10 @@ using CopaFilmes.Dominio.Entidades;
 using CopaFilmes.Dominio.Repositorio;
 using Moq;
 using NUnit.Framework;
+using RepositorioAPI;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using Where =
     System.Linq.Expressions.Expression<
         System.Func<CopaFilmes.Dominio.Entidades.Filme, bool>>;
@@ -14,76 +16,52 @@ using WhereAction =
 
 namespace CopaFilmes.Tests
 {
+    [TestFixture]
     public class TesteRepositorioApiFilme
     {
-        public Mock<IRepository<Filme>> MockRepositorioFilme { get; private set; }
-
-        private List<Filme> lista;
+        public Mock<RepositorioAPI<Filme>> MockRepositorioFilme { get; private set; }
         private IRepository<Filme> Repositorio;
 
-        [OneTimeSetUp]
+        [SetUp]
         public void Setup()
         {
-            lista = new List<Filme>();
-            var ano = 1990;
-            for (int i = 1; i <= 100; i++)
-            {
-                var filme = new Filme
-                {
-                    Ano = ano + (i % 20),
-                    Id = $"filme{i}",
-                    Titulo = $"{i.ToString("D3")} Filme",
-                    Nota = (double)i / 10
-                };
-                lista.Add(filme);
-            }
-            MockRepositorioFilme = new Mock<IRepository<Filme>>();
-            MockRepositorioFilme.Setup(x => x.Consulta()).Returns(lista);
+            MockRepositorioFilme = new Mock<RepositorioAPI<Filme>>();
             Repositorio = MockRepositorioFilme.Object;
-
-            var query = lista.AsQueryable();
-
-            MockRepositorioFilme.Setup(x => x.ConsultaEspecifica(It.IsAny<WhereAction>()))
-                .Returns<WhereAction>(x => x(query).ToList());
-
-            MockRepositorioFilme.Setup(x => x.ConsultaEspecifica(It.IsAny<WhereAction>()))
-                .Returns<WhereAction>(x => x(query).ToList());
         }
 
         [Test]
-        public void TestConsulta()
+        public void TestFalhaConsulta()
         {
+            MockRepositorioFilme.Setup(x => x.Consulta()).Returns(() => {
+                Repositorio.Mensagens.Add(new Mensagem("404", "Http Not Found"));
+                return null;
+            });
             var dados = Repositorio.Consulta();
-            Assert.IsNotNull(dados);
-            Assert.AreEqual(dados.Count, 100);
+            Assert.IsNull(dados);
+            Assert.IsNotEmpty(Repositorio.Mensagens);
+            Assert.AreEqual(Repositorio.Mensagens.First().Razao, "404");
         }
 
         [Test]
-        public void TestConsultaWhere()
+        public void TestFalhaGenericaConsulta()
         {
+            MockRepositorioFilme.Setup(x => x.GetRequestResult()).Throws(new HttpRequestException("Falhou"));
             var dados = Repositorio.Consulta();
-
-            MockRepositorioFilme.Setup(x => x.Consulta(It.IsAny<Where>()))
-                .Returns<Where>(predicate => dados.Where(predicate.Compile()).ToList());
-
-            var retorno = Repositorio.Consulta(f => f.Nota > 9);
-            Assert.IsNotNull(retorno);
-            Assert.AreEqual(retorno.Count, 10);
+            Assert.IsNull(dados);
+            Assert.IsNotEmpty(Repositorio.Mensagens);
+            Assert.AreEqual(Repositorio.Mensagens.Count, 1);
+            Assert.AreEqual(Repositorio.Mensagens.First().Razao, "RequestError");
         }
 
         [Test]
-        public void TestConsultaEspecifica()
+        public void TestFalhaHttpConsulta()
         {
-            var query = Repositorio.Consulta().AsQueryable();
-
-            var retorno = Repositorio.ConsultaEspecifica(query =>
-                    from filme in query
-                    where filme.Nota >= 9
-                    orderby filme.Nota descending
-                    select filme);
-
-            Assert.AreEqual(retorno.Count, 11);
-            Assert.AreEqual(retorno.First(), lista.Last());
+            MockRepositorioFilme.Setup(x => x.GetRequestResult()).Throws(new System.Exception("Falhou"));
+            var dados = Repositorio.Consulta();
+            Assert.IsNull(dados);
+            Assert.IsNotEmpty(Repositorio.Mensagens);
+            Assert.AreEqual(Repositorio.Mensagens.Count, 1);
+            Assert.AreEqual(Repositorio.Mensagens.First().Razao, "Exception");
         }
     }
 }

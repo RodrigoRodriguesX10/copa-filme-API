@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CopaFilmes.Dominio\CopaFilmes.Dominio.csproj" />
+    <ProjectReference Include="..\RepositorioAPI\RepositorioAPI.csproj" />
   </ItemGroup>
 
 </Project>

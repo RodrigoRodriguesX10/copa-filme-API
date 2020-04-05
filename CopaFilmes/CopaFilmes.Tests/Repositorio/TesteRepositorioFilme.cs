@@ -14,6 +14,7 @@ using WhereAction =
 
 namespace CopaFilmes.Tests
 {
+    [TestFixture]
     public class TesteRepositorioFilme
     {
         public Mock<IRepository<Filme>> MockRepositorioFilme { get; private set; }

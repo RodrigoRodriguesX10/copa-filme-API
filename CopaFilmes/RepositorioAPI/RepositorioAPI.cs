@@ -23,20 +23,26 @@ namespace RepositorioAPI
 
         public List<Mensagem> Mensagens { get; }
 
+        public List<T> GetRequestResult()
+        {
+            using var client = new HttpClient();
+            var response = client.GetAsync(sourceUrl + path).GetAwaiter().GetResult();
+            var json = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            if (!response.IsSuccessStatusCode)
+            {
+                Mensagens.Add(new Mensagem(response.StatusCode.ToString(), $"{response.ReasonPhrase}. Details: {json}"));
+                return null;
+            }
+            var lista = JsonSerializer.Deserialize<List<T>>(json);
+            return lista;
+        }
+
         public List<T> Consulta()
         {
             try
             {
-                using var client = new HttpClient();
-                var response = client.GetAsync(sourceUrl + path).GetAwaiter().GetResult();
-                var json = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                if (!response.IsSuccessStatusCode)
-                {
-                    Mensagens.Add(new Mensagem(response.StatusCode.ToString(), $"{response.ReasonPhrase}. Details: {json}"));
-                    return null;
-                }
-                var lista = JsonSerializer.Deserialize<List<T>>(json);
-                return lista;
+                var res = GetRequestResult();
+                return res;
             }
             catch(HttpRequestException httpEx)
             {
