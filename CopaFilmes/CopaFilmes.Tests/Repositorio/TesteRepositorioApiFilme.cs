@@ -25,21 +25,23 @@ namespace CopaFilmes.Tests
         [SetUp]
         public void Setup()
         {
-            MockRepositorioFilme = new Mock<RepositorioAPI<Filme>>();
+            MockRepositorioFilme = new Mock<RepositorioAPI<Filme>>("www.teste.com.br");
             Repositorio = MockRepositorioFilme.Object;
+
+            MockRepositorioFilme.Setup(x => x.GetRequestResult()).Returns(() =>
+            {
+                Repositorio.Mensagens.Add(new Mensagem("Erro", "Retornando null por default"));
+                return null;
+            });
         }
 
         [Test]
         public void TestFalhaConsulta()
         {
-            MockRepositorioFilme.Setup(x => x.Consulta()).Returns(() => {
-                Repositorio.Mensagens.Add(new Mensagem("404", "Http Not Found"));
-                return null;
-            });
             var dados = Repositorio.Consulta();
             Assert.IsNull(dados);
             Assert.IsNotEmpty(Repositorio.Mensagens);
-            Assert.AreEqual(Repositorio.Mensagens.First().Razao, "404");
+            Assert.AreEqual(Repositorio.Mensagens.First().Razao, "Erro");
         }
 
         [Test]

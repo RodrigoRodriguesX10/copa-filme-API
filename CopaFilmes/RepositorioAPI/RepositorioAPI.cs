@@ -23,7 +23,7 @@ namespace RepositorioAPI
 
         public List<Mensagem> Mensagens { get; }
 
-        public List<T> GetRequestResult()
+        public virtual List<T> GetRequestResult()
         {
             using var client = new HttpClient();
             var response = client.GetAsync(sourceUrl + path).GetAwaiter().GetResult();

@@ -10,6 +10,9 @@ namespace CopaFilmes.Dominio.ViewModels
         public Filme Filme1 { get; set; }
         public Filme Filme2 { get; set; }
 
+        public string Titulo => Filme1 != null && Filme2 != null ? 
+            $"{Filme1.Titulo} x {Filme2.Titulo}" : null;
+
         public Filme GetVencedor()
         {
             if (Filme1.Nota == Filme2.Nota)
