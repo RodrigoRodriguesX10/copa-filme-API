@@ -49,6 +49,9 @@ namespace CopaFilmes.Tests
 
             MockRepositorioFilme.Setup(x => x.ConsultaEspecifica(It.IsAny<WhereAction>()))
                 .Returns<WhereAction>(x => x(query).ToList());
+
+            MockRepositorioFilme.Setup(x => x.Retorna(It.IsAny<string>()))
+                .Returns<string>(x => lista.FirstOrDefault(i => i.Id == x));
         }
 
         [Test]
@@ -85,6 +88,22 @@ namespace CopaFilmes.Tests
 
             Assert.AreEqual(retorno.Count, 11);
             Assert.AreEqual(retorno.First(), lista.Last());
+        }
+
+        [Test]
+        public void DeveRetornarRegistroPorId()
+        {
+            var registro = Repositorio.Retorna("filme1");
+
+            Assert.IsNotNull(registro);
+            Assert.AreEqual(registro, lista.First());
+        }
+
+        [Test]
+        public void NaoDeveRetornarRegistroPorId()
+        {
+            var registro = Repositorio.Retorna("naoexisteid");
+            Assert.IsNull(registro);
         }
     }
 }

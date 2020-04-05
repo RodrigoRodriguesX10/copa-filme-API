@@ -15,6 +15,11 @@ namespace CopaFilmes.API
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddRouting();
+            services.AddCors(c => c.AddDefaultPolicy(b =>
+            {
+                b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -25,10 +30,7 @@ namespace CopaFilmes.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
+            app.UseCors();
         }
     }
 }

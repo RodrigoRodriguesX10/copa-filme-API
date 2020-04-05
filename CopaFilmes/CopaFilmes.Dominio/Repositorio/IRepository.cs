@@ -15,6 +15,12 @@ namespace CopaFilmes.Dominio.Repositorio
     {
         List<Mensagem> Mensagens { get; }
         /// <summary>
+        /// Consulta o item T no repositório através do ID especificado
+        /// </summary>
+        /// <param name="id">ID do registro que deve ser consultado</param>
+        /// <returns>Retorna o registro consultado no repositório</returns>
+        T Retorna(string id);
+        /// <summary>
         /// Consulta todos os itens do tipo T no repositório especificado
         /// </summary>
         /// <returns>Retorna um List contendo todos os itens retornados</returns>

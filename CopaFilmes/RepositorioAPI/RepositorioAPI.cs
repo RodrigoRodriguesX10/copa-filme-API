@@ -23,17 +23,17 @@ namespace RepositorioAPI
 
         public List<Mensagem> Mensagens { get; }
 
-        public virtual List<T> GetRequestResult()
+        public virtual T2 GetRequestResult<T2>(string extra = "") where T2 : class
         {
             using var client = new HttpClient();
-            var response = client.GetAsync(sourceUrl + path).GetAwaiter().GetResult();
+            var response = client.GetAsync(sourceUrl + path + extra).GetAwaiter().GetResult();
             var json = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             if (!response.IsSuccessStatusCode)
             {
                 Mensagens.Add(new Mensagem(response.StatusCode.ToString(), $"{response.ReasonPhrase}. Details: {json}"));
                 return null;
             }
-            var lista = JsonSerializer.Deserialize<List<T>>(json);
+            var lista = JsonSerializer.Deserialize<T2>(json);
             return lista;
         }
 
@@ -41,7 +41,7 @@ namespace RepositorioAPI
         {
             try
             {
-                var res = GetRequestResult();
+                var res = GetRequestResult<List<T>>();
                 return res;
             }
             catch(HttpRequestException httpEx)
@@ -67,6 +67,24 @@ namespace RepositorioAPI
                 return null;
             var queryResult = applyQuery(list);
             return queryResult?.ToList();
+        }
+
+        public T Retorna(string id)
+        {
+            try
+            {
+                var res = GetRequestResult<T>("/" + id);
+                return res;
+            }
+            catch (HttpRequestException httpEx)
+            {
+                Mensagens.Add(new Mensagem("RequestError", httpEx.Message));
+            }
+            catch (Exception ex)
+            {
+                Mensagens.Add(new Mensagem("Exception", ex.Message));
+            }
+            return null;
         }
     }
 }

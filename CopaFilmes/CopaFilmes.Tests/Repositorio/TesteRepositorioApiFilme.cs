@@ -3,16 +3,8 @@ using CopaFilmes.Dominio.Repositorio;
 using Moq;
 using NUnit.Framework;
 using RepositorioAPI;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using Where =
-    System.Linq.Expressions.Expression<
-        System.Func<CopaFilmes.Dominio.Entidades.Filme, bool>>;
-using WhereAction =
-    System.Func<
-        System.Linq.IQueryable<CopaFilmes.Dominio.Entidades.Filme>,
-        System.Linq.IQueryable<CopaFilmes.Dominio.Entidades.Filme>>;
 
 namespace CopaFilmes.Tests
 {
@@ -28,7 +20,7 @@ namespace CopaFilmes.Tests
             MockRepositorioFilme = new Mock<RepositorioAPI<Filme>>("www.teste.com.br");
             Repositorio = MockRepositorioFilme.Object;
 
-            MockRepositorioFilme.Setup(x => x.GetRequestResult()).Returns(() =>
+            MockRepositorioFilme.Setup(x => x.GetRequestResult<It.IsAnyType>(It.IsAny<string>())).Returns(() =>
             {
                 Repositorio.Mensagens.Add(new Mensagem("Erro", "Retornando null por default"));
                 return null;
@@ -47,7 +39,7 @@ namespace CopaFilmes.Tests
         [Test]
         public void TestFalhaGenericaConsulta()
         {
-            MockRepositorioFilme.Setup(x => x.GetRequestResult()).Throws(new HttpRequestException("Falhou"));
+            MockRepositorioFilme.Setup(x => x.GetRequestResult<It.IsAnyType>(It.IsAny<string>())).Throws(new HttpRequestException("Falhou"));
             var dados = Repositorio.Consulta();
             Assert.IsNull(dados);
             Assert.IsNotEmpty(Repositorio.Mensagens);
@@ -58,7 +50,7 @@ namespace CopaFilmes.Tests
         [Test]
         public void TestFalhaHttpConsulta()
         {
-            MockRepositorioFilme.Setup(x => x.GetRequestResult()).Throws(new System.Exception("Falhou"));
+            MockRepositorioFilme.Setup(x => x.GetRequestResult<It.IsAnyType>(It.IsAny<string>())).Throws(new System.Exception("Falhou"));
             var dados = Repositorio.Consulta();
             Assert.IsNull(dados);
             Assert.IsNotEmpty(Repositorio.Mensagens);
