@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopaFilmes.Dominio", "CopaFilmes.Dominio\CopaFilmes.Dominio.csproj", "{50B7BB6A-5A83-4843-A2A0-8E4900161E26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioAPI", "RepositorioAPI\RepositorioAPI.csproj", "{526D3DCB-D92C-4AA8-9AF4-C640222E6D74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RepositorioAPI", "RepositorioAPI\RepositorioAPI.csproj", "{526D3DCB-D92C-4AA8-9AF4-C640222E6D74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopaFilmes.Tests", "CopaFilmes.Tests\CopaFilmes.Tests.csproj", "{078DC651-C638-4782-A7B3-A71884231ADF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopaFilmes.Tests", "CopaFilmes.Tests\CopaFilmes.Tests.csproj", "{078DC651-C638-4782-A7B3-A71884231ADF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopaFilmes.API", "CopaFilmes.API\CopaFilmes.API.csproj", "{551D8E84-091A-4690-92CB-45C0BC48CF7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{078DC651-C638-4782-A7B3-A71884231ADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{078DC651-C638-4782-A7B3-A71884231ADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{078DC651-C638-4782-A7B3-A71884231ADF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{551D8E84-091A-4690-92CB-45C0BC48CF7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{551D8E84-091A-4690-92CB-45C0BC48CF7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{551D8E84-091A-4690-92CB-45C0BC48CF7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{551D8E84-091A-4690-92CB-45C0BC48CF7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

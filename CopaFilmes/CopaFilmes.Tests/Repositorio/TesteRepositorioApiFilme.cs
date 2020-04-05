@@ -14,7 +14,7 @@ using WhereAction =
 
 namespace CopaFilmes.Tests
 {
-    public class TesteRepositorioFilme
+    public class TesteRepositorioApiFilme
     {
         public Mock<IRepository<Filme>> MockRepositorioFilme { get; private set; }
 
