@@ -31,7 +31,15 @@ namespace CopaFilmes.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(string id)
         {
-
+            try
+            {
+                var res = repository.Retorna(id);
+                return res != null ? Ok(res) : StatusCode(400, repository.Mensagens);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
     }
 }
