@@ -5,3 +5,12 @@
 /CopaFilmes/.vs/
 /CopaFilmes/CopaFilmes.Dominio/bin/
 /CopaFilmes/CopaFilmes.Dominio/obj/
+/CopaFilmes/RepositorioAPI/obj
+/CopaFilmes/RepositorioAPI/bin
+/CopaFilmes/CopaFilmes.Tests/obj
+/CopaFilmes/CopaFilmes.Tests/bin
+/CopaFilmes/CopaFilmes.API/obj
+/CopaFilmes/CopaFilmes.API/bin
+/CopaFilmes/CopaFilmes.IoC/obj
+/CopaFilmes/CopaFilmes.IoC/bin
+/.vs/slnx.sqlite
