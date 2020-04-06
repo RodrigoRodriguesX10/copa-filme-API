@@ -1,6 +1,8 @@
 ﻿using CopaFilmes.Dominio.Entidades;
+using CopaFilmes.Dominio.Repositorio;
 using CopaFilmes.Dominio.Servicos;
 using CopaFilmes.Dominio.ViewModels;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -34,7 +36,7 @@ namespace CopaFilmes.Tests.Servico
         Filme Filme8 = new Filme { Nota = 10, Ano = 2000, Titulo = "O vencedor", Id = "filme8" };
         List<Filme> Selecionados = null;
         private ServicoFilme servicoFilme;
-
+        string[] Ids;
         [OneTimeSetUp]
         public void SetUp()
         {
@@ -50,7 +52,9 @@ namespace CopaFilmes.Tests.Servico
                 Filme2,
                 Filme1
             };
-            servicoFilme = new ServicoFilme();
+            Ids = Selecionados.Select(s => s.Id).ToArray();
+            var mockRepositorioFilme = TesteRepositorioFilme.CreateRepositoryMock(Selecionados);
+            servicoFilme = new ServicoFilme(mockRepositorioFilme.Object);
         }
 
         [Test]
@@ -105,7 +109,7 @@ namespace CopaFilmes.Tests.Servico
         [Test]
         public void DeveRetornarResultadoCompeticao()
         {
-            var (vencedor, vice) = servicoFilme.GetResultadoCompeticao(Selecionados);
+            var (vencedor, vice) = servicoFilme.GetResultadoCompeticao(Selecionados.Select(s => s.Id).ToArray());
             Assert.AreEqual(vencedor, Filme8);
             Assert.AreEqual(vice, Filme4);
         }
@@ -124,7 +128,7 @@ namespace CopaFilmes.Tests.Servico
         [Test]
         public void DeveCriarChavesCompeticao()
         {
-            var chaves = servicoFilme.CriarCompeticao(Selecionados);
+            var chaves = servicoFilme.CriarCompeticao(Ids);
             Assert.AreEqual(chaves.Length, 4);
             Assert.AreEqual(chaves[0].Filme1, Filme1);
             Assert.AreEqual(chaves[0].Filme2, Filme8);
@@ -139,7 +143,7 @@ namespace CopaFilmes.Tests.Servico
         [Test]
         public void DeveDevolverFasesCompeticao()
         {
-            var chaves = servicoFilme.CriarCompeticao(Selecionados);
+            var chaves = servicoFilme.CriarCompeticao(Ids);
             Assert.AreEqual(chaves.Length, 4);
             var fases = servicoFilme.GetFasesCompeticao(chaves);
             Assert.AreEqual(fases.Count, 3);
@@ -156,7 +160,48 @@ namespace CopaFilmes.Tests.Servico
             Assert.Throws(typeof(ArgumentNullException),
                 () => servicoFilme.CriarCompeticao(null));
             Assert.Throws(typeof(ArgumentException),
-                () => servicoFilme.CriarCompeticao(impar.ToList()));
+                () => servicoFilme.CriarCompeticao(impar.Select(i => i.Id).ToArray()));
+        }
+
+
+        [Test]
+        public void NaoDeveCriarChavesCompeticaoIdsInvalidos()
+        {
+            Assert.Throws(typeof(ArgumentException),
+                () => servicoFilme.CriarCompeticao(new[] {
+                    Ids[0],
+                    Ids[0],
+                    Ids[0],
+                    Ids[0],
+                    Ids[0],
+                    Ids[0],
+                    Ids[0],
+                    Ids[0]
+                }));
+
+            Assert.Throws(typeof(ArgumentException),
+                () => servicoFilme.CriarCompeticao(new[] {
+                    Ids[0],
+                    Ids[1],
+                    Ids[2],
+                    Ids[3],
+                    Ids[4],
+                    Ids[5],
+                    Ids[6],
+                    Ids[6]
+                }));
+
+            Assert.Throws(typeof(ArgumentException),
+                () => servicoFilme.CriarCompeticao(new[] {
+                    Ids[0],
+                    Ids[1],
+                    Ids[2],
+                    Ids[3],
+                    Ids[4],
+                    Ids[5],
+                    Ids[6],
+                    "idinexistente"
+                }));
         }
     }
 }

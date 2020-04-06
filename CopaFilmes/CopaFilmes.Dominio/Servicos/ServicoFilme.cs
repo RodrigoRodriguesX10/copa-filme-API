@@ -9,8 +9,11 @@ namespace CopaFilmes.Dominio.Servicos
 {
     public class ServicoFilme
     {
-        public ServicoFilme()
+        private readonly IRepository<Filme> repository;
+
+        public ServicoFilme(IRepository<Filme> repository)
         {
+            this.repository = repository;
         }
 
         /// <summary>
@@ -52,17 +55,26 @@ namespace CopaFilmes.Dominio.Servicos
             return chaves;
         }
 
-        public Chave[] CriarCompeticao(List<Filme> filmesEscolhidos)
+        public Chave[] CriarCompeticao(string[] filmesEscolhidos)
         {
             if (filmesEscolhidos == null)
             {
                 throw new ArgumentNullException("A lista não pode ser nula");
             }
-            if (filmesEscolhidos.Count != 8)
+            if (filmesEscolhidos.Length != 8)
             {
                 throw new ArgumentException("A lista deve conter uma quantidade par de filmes");
             }
-            var ordenados = filmesEscolhidos.OrderBy(f => f.Titulo.ToUpper()).ToList();
+            var ordenados = repository.ConsultaEspecifica(q =>
+                from filme in q
+                where filmesEscolhidos.Contains(filme.Id)
+                orderby filme.Titulo.ToUpper()
+                select filme
+            );
+            if (ordenados.Count != 8)
+            {
+                throw new ArgumentException("A lista deve conter 8 filmes válidos");
+            }
             var chaves = CriarChaves(ordenados, false);
             return chaves;
         }
@@ -86,7 +98,7 @@ namespace CopaFilmes.Dominio.Servicos
             return res;
         }
 
-        public (Filme vencedor, Filme vice) GetResultadoCompeticao(List<Filme> competicao)
+        public (Filme vencedor, Filme vice) GetResultadoCompeticao(string[] competicao)
         {
             var chaves = CriarCompeticao(competicao);
             var x = GetFasesCompeticao(chaves);

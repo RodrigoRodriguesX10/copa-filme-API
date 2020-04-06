@@ -18,7 +18,7 @@ namespace CopaFilmes.API
             services.AddRouting();
             services.AddCors(c => c.AddDefaultPolicy(b =>
             {
-                b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+                b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
             }));
         }
 

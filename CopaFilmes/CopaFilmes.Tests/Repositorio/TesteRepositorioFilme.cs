@@ -19,6 +19,23 @@ namespace CopaFilmes.Tests
     {
         public Mock<IRepository<Filme>> MockRepositorioFilme { get; private set; }
 
+        public static Mock<IRepository<Filme>> CreateRepositoryMock(List<Filme> lista)
+        {
+            var m = new Mock<IRepository<Filme>>();
+            var query = lista.AsQueryable();
+            m.Setup(x => x.Consulta()).Returns(lista);
+            m.Setup(x => x.ConsultaEspecifica(It.IsAny<WhereAction>()))
+                .Returns<WhereAction>(x => x(query).ToList());
+
+            m.Setup(x => x.ConsultaEspecifica(It.IsAny<WhereAction>()))
+                .Returns<WhereAction>(x => x(query).ToList());
+
+            m.Setup(x => x.Retorna(It.IsAny<string>()))
+                .Returns<string>(x => lista.FirstOrDefault(i => i.Id == x));
+
+            return m;
+        }
+
         private List<Filme> lista;
         private IRepository<Filme> Repositorio;
 
@@ -38,20 +55,9 @@ namespace CopaFilmes.Tests
                 };
                 lista.Add(filme);
             }
-            MockRepositorioFilme = new Mock<IRepository<Filme>>();
-            MockRepositorioFilme.Setup(x => x.Consulta()).Returns(lista);
+
+            MockRepositorioFilme = CreateRepositoryMock(lista);
             Repositorio = MockRepositorioFilme.Object;
-
-            var query = lista.AsQueryable();
-
-            MockRepositorioFilme.Setup(x => x.ConsultaEspecifica(It.IsAny<WhereAction>()))
-                .Returns<WhereAction>(x => x(query).ToList());
-
-            MockRepositorioFilme.Setup(x => x.ConsultaEspecifica(It.IsAny<WhereAction>()))
-                .Returns<WhereAction>(x => x(query).ToList());
-
-            MockRepositorioFilme.Setup(x => x.Retorna(It.IsAny<string>()))
-                .Returns<string>(x => lista.FirstOrDefault(i => i.Id == x));
         }
 
         [Test]
