@@ -41,5 +41,19 @@ namespace CopaFilmes.API.Controllers
                 return StatusCode(500, ex);
             }
         }
+
+        //[HttpPost("{id}")]
+        //public IActionResult CriarCompeticao(string id)
+        //{
+        //    try
+        //    {
+        //        var res = repository.Retorna(id);
+        //        return res != null ? Ok(res) : StatusCode(404, repository.Mensagens);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, ex);
+        //    }
+        //}
     }
 }

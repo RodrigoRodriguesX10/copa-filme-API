@@ -33,7 +33,7 @@ namespace RepositorioAPI
                 Mensagens.Add(new Mensagem(response.StatusCode.ToString(), $"{response.ReasonPhrase}. Details: {json}"));
                 return null;
             }
-            var lista = JsonSerializer.Deserialize<T2>(json);
+            var lista = JsonSerializer.Deserialize<T2>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             return lista;
         }
 
@@ -73,8 +73,9 @@ namespace RepositorioAPI
         {
             try
             {
-                var res = GetRequestResult<T>("/" + id);
-                return res;
+                //var res = GetRequestResult<T>("/" + id); // API não implementa metodo get by id
+                var res = Consulta(x => x.Id == id);
+                return res.FirstOrDefault();
             }
             catch (HttpRequestException httpEx)
             {

@@ -3,8 +3,8 @@
     "windowsAuthentication": false, 
     "anonymousAuthentication": true, 
     "iisExpress": {
-      "applicationUrl": "http://localhost:61182",
-      "sslPort": 44347
+      "applicationUrl": "http://localhost:60000",
+      "sslPort": 44300
     }
   },
   "profiles": {
@@ -18,7 +18,7 @@
     "CopaFilmes.API": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "applicationUrl": "https://0.0.0.0:60000;http://0.0.0.0:44300",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

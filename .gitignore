@@ -11,3 +11,6 @@
 /CopaFilmes/CopaFilmes.Tests/bin
 /CopaFilmes/CopaFilmes.API/obj
 /CopaFilmes/CopaFilmes.API/bin
+/CopaFilmes/CopaFilmes.IoC/obj
+/CopaFilmes/CopaFilmes.IoC/bin
+/.vs/slnx.sqlite
