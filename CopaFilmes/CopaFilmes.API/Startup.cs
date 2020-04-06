@@ -1,4 +1,5 @@
-﻿using CopaFilmes.IoC;
+﻿using CopaFilmes.Dominio.Servicos;
+using CopaFilmes.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +26,7 @@ namespace CopaFilmes.API
             var sa = configuration.GetConnectionString("Default");
             services.AddRepositorioApi(sa);
             services.AddControllers();
+            services.AddTransient<ServicoFilme>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
