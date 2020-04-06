@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RepositorioAPI", "Repositor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopaFilmes.Tests", "CopaFilmes.Tests\CopaFilmes.Tests.csproj", "{078DC651-C638-4782-A7B3-A71884231ADF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopaFilmes.API", "CopaFilmes.API\CopaFilmes.API.csproj", "{551D8E84-091A-4690-92CB-45C0BC48CF7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopaFilmes.API", "CopaFilmes.API\CopaFilmes.API.csproj", "{551D8E84-091A-4690-92CB-45C0BC48CF7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopaFilmes.IoC", "CopaFilmes.IoC\CopaFilmes.IoC.csproj", "{5CEBFE54-FC6D-49AC-B40B-C17797A046FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{551D8E84-091A-4690-92CB-45C0BC48CF7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{551D8E84-091A-4690-92CB-45C0BC48CF7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{551D8E84-091A-4690-92CB-45C0BC48CF7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CEBFE54-FC6D-49AC-B40B-C17797A046FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CEBFE54-FC6D-49AC-B40B-C17797A046FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CEBFE54-FC6D-49AC-B40B-C17797A046FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CEBFE54-FC6D-49AC-B40B-C17797A046FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

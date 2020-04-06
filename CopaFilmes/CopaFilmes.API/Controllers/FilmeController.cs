@@ -34,7 +34,7 @@ namespace CopaFilmes.API.Controllers
             try
             {
                 var res = repository.Retorna(id);
-                return res != null ? Ok(res) : StatusCode(400, repository.Mensagens);
+                return res != null ? Ok(res) : StatusCode(404, repository.Mensagens);
             }
             catch (Exception ex)
             {

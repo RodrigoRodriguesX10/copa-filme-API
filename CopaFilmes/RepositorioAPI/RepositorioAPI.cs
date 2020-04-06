@@ -14,7 +14,7 @@ namespace RepositorioAPI
         private readonly string sourceUrl;
         private readonly string path;
 
-        public RepositorioAPI(string sourceUrl)
+        public RepositorioAPI(SourceAddress sourceUrl)
         {
             this.sourceUrl = sourceUrl;
             this.path = $"/api/{typeof(T).Name}s";
