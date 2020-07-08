@@ -17,7 +17,7 @@ namespace CopaFilmes.Tests
         [SetUp]
         public void Setup()
         {
-            MockRepositorioFilme = new Mock<RepositorioAPI<Filme>>("www.teste.com.br");
+            MockRepositorioFilme = new Mock<RepositorioAPI<Filme>>((SourceAddress)"www.teste.com.br");
             Repositorio = MockRepositorioFilme.Object;
 
             MockRepositorioFilme.Setup(x => x.GetRequestResult<It.IsAnyType>(It.IsAny<string>())).Returns(() =>
